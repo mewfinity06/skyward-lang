@@ -1,3 +1,80 @@
-# skyward-lang
+# Skyward - Syntax of Rust, Simplicity of C
 
-An Experimental Language by Mewfinity06
+## Why?
+
+Simple reason? I was bored.
+
+## Basic Syntax
+
+```rust
+use io; // Import the IO library
+
+// Declare an Enum Struct
+struct EmployeeStatus : Enum {
+    @start 0; // Has the first element (ADMIN) start at 0
+    @step 1000; // Each element increases by 1000
+
+    ADMIN,   // 0000
+    MANAGER, // 1000
+    ENTRY,   // 2000
+    GUEST,   // 3000
+}
+
+// Member functions for EmployeeStatus
+EmployeeStatus : impl {
+
+    // Declare an untyped function (working name)
+    // With untyped functions, self is assumed.
+    // Traditional functions must explicitly call
+    // self as the fist parameter.
+    public func human : Char* {
+        switch(self) {
+        ADMIN   => return "Admin";
+        MANAGER => return "Manager";
+        ENTRY   => return "Entry";
+        GUEST   => return "Guest";
+        else    => return "Unknown";
+        }
+    }
+}
+
+// Declare a Compact Struct
+struct Employee : Compact {
+    Status: EmployeeStatus,
+    Name:   Char*,
+    ID:     Int,
+}
+
+// Member functions for Employee
+Employee : impl {
+
+    // A member variable
+    private mut seed : Int = 0;
+
+    public func new(status: EmployeeStatus, name: Char*) : Employee {
+        defer seed++; // Defer seed++ until end of scope
+        return Employee {
+            Status: status,
+            Name: name,
+            ID: status + seed,
+        }
+    }
+
+    public func print : None {
+        io.print("Employee:\n");
+        io.print("Name: <>\n", self.Name);
+        io.print("Status: <>\n", self.Status);
+        io.print("ID: <>\n", self.ID.human());
+    }
+
+}
+
+func main() : Int {
+    // Declares a new Employee named Steve
+    const employee : Employee = Employee.new(ADMIN, "Steve");
+
+    employee.print();
+
+    return 0;
+}
+```
