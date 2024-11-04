@@ -40,4 +40,6 @@ int main(int argc, char **argv) {
 
     std::vector<Token> words = tokenize_with_positions(contents);
 
+    print_all(words);
+
 }

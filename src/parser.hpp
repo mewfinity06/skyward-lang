@@ -1,8 +1,13 @@
 #ifndef PARSER_HPP_
 #define PARSER_HPP_
 
+#include <iostream>
+#include <string>
 #include <vector>
+#include <cctype>
+#include <unordered_set>
 #include <sstream>
+
 
 #include "typedefs.hpp"
 
@@ -28,8 +33,6 @@ public:
     void check_type();
 
 };
-
-const string delims = "!@#$%^&*()_+-={}[]|\\:;\"\'<>,.?/";
 
 std::vector<Token> tokenize_with_positions(const std::string &source);
 void print_word(Token word);
@@ -73,22 +76,91 @@ void Token::check_type() {
     }
 }
 
+const std::string single_char_delims = "!@#$%^&*()_+-={}[]|\\:;\"\'<>,.?/";
+const std::unordered_set<std::string> multi_char_tokens = {
+    "<=", ">=", "==", "!=", "&&", "||", "++", "--",
+    "->", "=>", "||", "&&", "|>"
+};
+const std::string comment_start = "//";
+
 std::vector<Token> tokenize_with_positions(const std::string &source) {
     std::vector<Token> tokens;
     size_t start = 0;
     int row = 1, col = 1;
 
     for (size_t end = 0; end < source.size(); ++end) {
-        if (delims.find(source[end]) != std::string::npos) {
-            // Add the current word as a token if it's not empty
+        // Check for single-line comments
+        if (source.substr(end, 2) == comment_start) {
+            // Add the preceding token if any
             if (start < end) {
                 tokens.push_back(Token(source.substr(start, end - start), row, col - static_cast<int>(end - start)));
             }
-            // Add the delimiter as a separate token
+            // Move end to the end of the line
+            while (end < source.size() && source[end] != '\n') {
+                end++;
+            }
+            start = end + 1;
+            row++;
+            col = 1;
+            continue;
+        }
+
+        // Check for multi-character tokens (like <=, >=) by looking at two characters at a time
+        if (end < source.size() - 1) {
+            std::string two_char_token = source.substr(end, 2);
+            if (multi_char_tokens.find(two_char_token) != multi_char_tokens.end()) {
+                // Add the preceding word token if any
+                if (start < end) {
+                    tokens.push_back(Token(source.substr(start, end - start), row, col - static_cast<int>(end - start)));
+                }
+                // Add the two-character token
+                tokens.push_back(Token(two_char_token, row, col));
+                start = end + 2;
+                col += 2;
+                end++;
+                continue;
+            }
+        }
+
+        // Check for strings and character literals
+        if (source[end] == '"' || source[end] == '\'') {
+            char quote_type = source[end];
+            size_t literal_start = end;
+            end++;
+            col++;
+
+            // Capture the entire string or character literal
+            while (end < source.size() && source[end] != quote_type) {
+                if (source[end] == '\\' && end + 1 < source.size()) {
+                    end += 2;  // Skip over escape sequences
+                    col += 2;
+                } else {
+                    end++;
+                    col++;
+                }
+            }
+
+            // Include the closing quote in the token
+            if (end < source.size()) {
+                end++;
+                col++;
+            }
+
+            tokens.push_back(Token(source.substr(literal_start, end - literal_start), row, col - static_cast<int>(end - literal_start)));
+            start = end;
+            continue;
+        }
+
+        // Single-character delimiter handling
+        if (single_char_delims.find(source[end]) != std::string::npos) {
+            if (start < end) {
+                tokens.push_back(Token(source.substr(start, end - start), row, col - static_cast<int>(end - start)));
+            }
             tokens.push_back(Token(std::string(1, source[end]), row, col));
             start = end + 1;
             col++;
         } else if (std::isspace(source[end])) {
+            // Handle whitespace and update row and column tracking
             if (source[end] == '\n') {
                 row++;
                 col = 1;
