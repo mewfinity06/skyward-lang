@@ -12,8 +12,66 @@
 typedef std::string string;
 
 enum TokenKind {
+    // Multichar tokens
     TOKEN_IDENT,
-    TOKEN_NUMBER,
+    TOKEN_INT,
+
+    TOKEN_STRING,
+    TOKEN_CHAR,
+
+    // Binary Tokens
+    TOKEN_PLUS,
+    TOKEN_MINUS,
+    TOKEN_STAR,
+    TOKEN_DIVIDE,
+    TOKEN_MOD,
+
+    TOKEN_ASSIGNMENT,          // =
+    TOKEN_IMPLICIT_ASSIGNMENT, // :=
+
+    // Seperator tokens
+    TOKEN_OPEN_PAREN,
+    TOKEN_CLOSE_PAREN,
+    TOKEN_OPEN_BRACKET,
+    TOKEN_CLOSE_BRACKET,
+    TOKEN_OPEN_CURLY,
+    TOKEN_CLOSE_CURLY,
+
+    // Single char tokens
+    TOKEN_BANG,        // !
+    TOKEN_ABROSE,      // @
+    TOKEN_POUND,       // #
+    TOKEN_CARROT,      // ^
+    TOKEN_AMPERSAND,   // &
+    TOKEN_PIPE,        // |
+    TOKEN_LEFT_ARROW,  // <
+    TOKEN_RIGHT_ARROW, // >
+    TOKEN_COLON,       // :
+    TOKEN_SEMI_COLON,  // ;
+    TOKEN_COMMA,       // ,
+    TOKEN_FULL_STOP,   // .
+    TOKEN_QUESTION,    // ?
+    TOKEN_BACK_TICK,   // `
+    TOKEN_TILDA,       // ~
+    TOKEN_BACK_SLASH,
+
+    // Multichar non alphanumeric tokens
+    TOKEN_EQUALS,         // ==
+    TOKEN_NOT_EQUALS,     // !=
+    TOKEN_GREATER_EQUALS, // >=
+    TOKEN_LESSER_EQUALS,  // <=
+
+    TOKEN_FAT_ARROW,  // =>
+    TOKEN_THIN_ARROW, // ->
+    TOKEN_PIPE_LINE,  // |> (Thanks Gleam!)
+
+    TOKEN_PLUS_PLUS,   // ++
+    TOKEN_MINUS_MINUS, // --
+    TOKEN_STAR_STAR,   // **
+
+    TOKEN_AND, // &&
+    TOKEN_OR,  // ||
+
     TOKEN_EOF,
     TOKEN_UNKNOWN,
 };
@@ -31,6 +89,8 @@ public:
     void print();
     void check_type();
 
+    Token *END_OF_FILE();
+
 };
 
 std::vector<Token> tokenize_with_positions(const std::string &source);
@@ -46,11 +106,18 @@ void print_word(Token word);
 
 #ifdef PARSER_IMPL_
 
-bool canConvertToInt(const std::string& str) {
+bool can_convert_to_int(const string& str) {
     std::stringstream ss(str);
     int num;
     char ch;
     return (ss >> num) && !(ss >> ch); 
+}
+
+bool is_identifier(const string& str) {
+    if (isalpha(str[0]) || str[0] == *"_") {
+        return true;
+    }
+    return false;
 }
 
 Token::Token()  
@@ -67,15 +134,161 @@ void Token::print()  {
                  "}" << std::endl;
 }
 
+Token *Token::END_OF_FILE() {
+    Token *eof = new Token();
+    eof->word = "END OF FILE";
+    eof->kind = TOKEN_EOF;
+    eof->row = -1;
+    eof->col = -1;
+    return eof;
+}
+
 void Token::check_type() {
-    if (canConvertToInt(word)) {
-        kind = TOKEN_NUMBER;
+    if (can_convert_to_int(word)) {
+        kind = TOKEN_INT;
     } else {
-        kind = TOKEN_IDENT;
+        if (word == "*") {
+            kind = TOKEN_STAR;
+        } 
+        else if (word == "/") {
+            kind = TOKEN_DIVIDE;
+        } 
+        else if (word == "+") {
+            kind = TOKEN_PLUS;
+        } 
+        else if (word == "-") {
+            kind = TOKEN_MINUS;
+        }
+        else if (word == "%") {
+            kind = TOKEN_MOD;
+        }
+        else if (word == "=") {
+            kind = TOKEN_ASSIGNMENT;
+        }
+        else if (word == ":=") {
+            kind = TOKEN_IMPLICIT_ASSIGNMENT;
+        }
+        else if (word == "(") {
+            kind = TOKEN_OPEN_PAREN;
+        }
+        else if (word == ")") {
+            kind = TOKEN_CLOSE_PAREN;
+        }
+        else if (word == "[") {
+            kind = TOKEN_OPEN_BRACKET;
+        }
+        else if (word == "]") {
+            kind = TOKEN_CLOSE_BRACKET;
+        }
+        else if (word == "{") {
+            kind = TOKEN_OPEN_CURLY;
+        }
+        else if (word == "}") {
+            kind = TOKEN_CLOSE_CURLY;
+        }
+        else if (word == "!") {
+            kind = TOKEN_BANG;
+        }
+        else if (word == "@") {
+            kind = TOKEN_ABROSE;
+        }
+        else if (word == "#") {
+            kind = TOKEN_POUND;
+        }
+        else if (word == "^") {
+            kind = TOKEN_CARROT;
+        }
+        else if (word == "&") {
+            kind = TOKEN_AMPERSAND;
+        }
+        else if (word == "|") {
+            kind = TOKEN_PIPE;
+        }
+        else if (word == "<") {
+            kind = TOKEN_LEFT_ARROW;
+        }
+        else if (word == ">") {
+            kind = TOKEN_RIGHT_ARROW;
+        }
+        else if (word == ":") {
+            kind = TOKEN_COLON;
+        }
+        else if (word == ";") {
+            kind = TOKEN_SEMI_COLON;
+        }
+        else if (word == ",") {
+            kind = TOKEN_COMMA;
+        }
+        else if (word == ".") {
+            kind = TOKEN_FULL_STOP;
+        }
+        else if (word == "?") {
+            kind = TOKEN_QUESTION;
+        }
+        else if (word == "`") {
+            kind = TOKEN_BACK_TICK;
+        }
+        else if (word == "~") {
+            kind = TOKEN_TILDA;
+        }
+        else if (word == "\\") {
+            kind = TOKEN_BACK_SLASH;
+        }
+        else if (word == "==") {
+            kind = TOKEN_EQUALS;
+        }
+        else if (word == "!=") {
+            kind = TOKEN_NOT_EQUALS;
+        }
+        else if (word == ">=") {
+            kind = TOKEN_GREATER_EQUALS;
+        }
+        else if (word == "<=") {
+            kind = TOKEN_LESSER_EQUALS;
+        }
+        else if (word == "=>") {
+            kind = TOKEN_FAT_ARROW;
+        }
+        else if (word == "->") {
+            kind = TOKEN_THIN_ARROW;
+        }
+        else if (word == "|>") {
+            kind = TOKEN_PIPE_LINE;
+        }
+        else if (word == "++") {
+            kind = TOKEN_PLUS_PLUS;
+        }
+        else if (word == "--") {
+            kind = TOKEN_MINUS_MINUS;
+        }
+        else if (word == "**") {
+            kind = TOKEN_STAR_STAR;
+        }
+        else if (word == "&&") {
+            kind = TOKEN_AND;
+        }
+        else if (word == "||") {
+            kind = TOKEN_OR;
+        }
+        else if (is_identifier(word)) {
+            kind = TOKEN_IDENT;
+        }
+        else if (word[0] == *"\"" && word.back() == *"\"") {
+            kind = TOKEN_STRING;
+        }
+        else if (word[0] == *"'" && word.back() == *"'") {
+            kind = TOKEN_CHAR;
+        }
+        else if (word == "END OF FILE") {
+            kind = TOKEN_EOF;
+        }
+        else {
+            kind = TOKEN_UNKNOWN;
+        }
     }
 }
 
-const std::string single_char_delims = "!@#$%^&*()_+-={}[]|\\:;\"\'<>,.?/";
+const std::string single_char_delims = "!@#$%^&*()_+-={}[]|\\:;\"\'<>,.?/`~";
 const std::unordered_set<std::string> multi_char_tokens = {
     "<=", ">=", "==", "!=", "&&", "||", "++", "--",
     "->", "=>", "||", "&&", "|>"
@@ -179,6 +392,8 @@ std::vector<Token> tokenize_with_positions(const std::string &source) {
     if (start < source.size()) {
         tokens.push_back(Token(source.substr(start), row, col - static_cast<int>(source.size() - start)));
     }
+
+    tokens.push_back(Token("END OF FILE", -1, -1));
 
     return tokens;
 }

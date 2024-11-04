@@ -5,6 +5,8 @@
 #define PARSER_IMPL_
 #include "src/parser.hpp"
 
+typedef std::string string;
+
 void usage(char **argv) {
     std::cout << "Usage: " << argv[0] << " <path_to_file>" << std::endl;
 }
