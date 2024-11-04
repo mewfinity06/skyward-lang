@@ -9,8 +9,7 @@
 #include <sstream>
 
 
-#include "typedefs.hpp"
-
+typedef std::string string;
 
 enum TokenKind {
     TOKEN_IDENT,

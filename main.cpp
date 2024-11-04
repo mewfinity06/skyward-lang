@@ -2,8 +2,6 @@
 #include <fstream>
 #include <vector>
 
-#include "src/typedefs.hpp"
-
 #define PARSER_IMPL_
 #include "src/parser.hpp"
 
