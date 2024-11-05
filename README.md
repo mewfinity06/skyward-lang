@@ -6,17 +6,34 @@ Simple reason? I was bored.
 
 ## Design Philosophy
 
-Skyward takes great inspiration from greats like C and Rust. I want to create a langauge that works close to the metal--allowing for users to actually interface with the systems that they love to use! I believe that speed and effience is key to a good language and it should be ergonomic.
+Skyward draws significant inspiration from established languages like C and Rust, aiming to operate close to the hardware and provide developers with direct access to the systems they value. Prioritizing speed and efficiency, Skyward is designed to be both high-performing and ergonomic.
 
-Langauges like C++ are too bloated for average use. Skyward strives to have a small and reliable core library that is easy for anyone to memorize. Every user should know what their langauge can do.
+In contrast to languages like C++, which can feel bloated for general use, Skyward is built around a lean and reliable core library that's intuitive and easy to master. We believe every developer should have a comprehensive understanding of what their language can accomplish.
 
-Just becuase Skyward works close to the hardware, doesn't mean that you are limited by little features. Skyward is packed with everyday features that modern languages should have. Vectors, Matrixes, and different sized Structs barely scratch the surface of what Skyward is capable of.
+Although Skyward operates close to the hardware, it remains feature-rich and versatile. Packed with essential modern features, Skyward supports vectors, matrices, and various structured data types, providing a powerful foundation for a broad range of applications.
 
 ## Usage
 
 ```bash
 ./skyward <path_to_file>
 ```
+
+## Features
+
+### Structs, Enums, Etc
+
+- C like structs, called Compact
+- Class like structs, called Loose.
+  - Loose Structs' memory isn't all stored in one place. A Loose Struct is made up of pointers to memory that is stored in a different place.
+- Rust like Enums, just an extention of Structs.
+
+### Functions
+
+- Signed and Unsigned Function calls
+  - Signed functions are just like in any other function!
+    - Signed functions must declare `self` as a parameter
+  - Unsigned functions are specific to Skyward. These functions allows the programmer to not be forced to provide a signature.
+    - All unsigned member functions ASSUME `self`
 
 ## Basic Syntax
 
@@ -37,7 +54,7 @@ struct EmployeeStatus : Enum {
 // Member functions for EmployeeStatus
 EmployeeStatus : impl {
 
-    // Declare an untyped function (working name)
+    // Declare an unsigned function
     // With untyped functions, self is assumed.
     // Traditional functions must explicitly call
     // self as the fist parameter.
@@ -88,7 +105,13 @@ func main() : Int {
     const employee : Employee = Employee.new(ADMIN, "Steve");
 
     employee.print();
-
+    // Prints:
+    //
+    //  Employee:
+    //  Name: Steve
+    //  Status: Admin
+    //  ID: 0000
+    //
     return 0;
 }
 ```
