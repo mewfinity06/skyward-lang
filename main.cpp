@@ -7,15 +7,31 @@
 
 typedef std::string string;
 
+bool DEBUG = false;
+
 void usage(char **argv) {
-    std::cout << "Usage: " << argv[0] << " <path_to_file>" << std::endl;
+    std::cout << "Usage: " << argv[0] << " <flags> <path_to_file>" << std::endl;
+    std::cout << "Flags:" << std::endl;
+    std::cout << "    -d    Debug" << std::endl;
 }
 
-void print_all(std::vector<Token> tokens) {
+void print_tokens(std::vector<Token> tokens) {
+    int total = 0;
     for (int i = 0; i < tokens.size(); ++i) {
-        std::cout << i << " ";
         tokens[i].print();
+        total++;
     }
+    std::cout << "Total tokens: " << total << std::endl;
+}
+
+void debug_tokens(std::vector<Token> tokens) {
+    int total = 0;
+    for (int i = 0; i < tokens.size(); ++i) {
+        tokens[i].debug();
+        std::cout << std::endl;
+        total++;
+    }
+    std::cout << "Total tokens: " << total << std::endl;
 }
 
 string get_file_contents(string file_path) {
@@ -30,15 +46,26 @@ string get_file_contents(string file_path) {
 
 int main(int argc, char **argv) {
 
+    string path;
+    std::vector<string> flags;
+
     if (argc < 2) {
         usage(argv);
         exit(1);
     }
 
-    string contents = get_file_contents(argv[1]);
+    path = argv[argc - 1];
 
-    std::vector<Token> words = tokenize_with_positions(contents);
+    for (int i = 1; i < argc - 1; ++i) {
+        flags.push_back(argv[i]);
+    }
 
-    print_all(words);
+    for (int i = 0; i < flags.size(); ++i) {
+        if (flags.at(i) == "-d") {
+            DEBUG = true;
+        }
+    }
+
+    std::vector<Token> words = tokenize_with_positions(path);
 
 }
