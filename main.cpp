@@ -15,7 +15,6 @@ void print_all(std::vector<Token> tokens) {
     for (int i = 0; i < tokens.size(); ++i) {
         std::cout << i << " ";
         tokens[i].print();
-        std::cout << std::endl;
     }
 }
 

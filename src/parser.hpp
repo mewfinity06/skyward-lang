@@ -11,10 +11,37 @@
 
 typedef std::string string;
 
+
+const std::string single_char_delims = "!@#$%^&*()_+-={}[]|\\:;\"\'<>,.?/`~";
+
+const std::string comment_start = "//";
+
+const std::unordered_set<std::string> multi_char_tokens = {
+    "<=", ">=", "==", "!=", "&&", "||", "++", "--", "**",
+    "->", "=>", "||", "&&", "|>",
+};
+
+const std::unordered_set<std::string> types = {
+    "Int", "Float", "Char", "String", "Byte", "Bool",
+    "Void", "None", "Enum", "Compact", "Loose", "Union",
+    "Vector", "Matrix", "Error", "Complex", "Usize",
+    "Isize"
+};
+
+const std::unordered_set<std::string> keywords = {
+    "func", "private", "public", "struct", "switch",
+    "return", "else", "finally", "impl", "const", "mut",
+    "defer", "break", "continue", "for", "while",
+    "signed", "unsigned", "use", "as"
+};
+
 enum TokenKind {
     // Multichar tokens
     TOKEN_IDENT,
     TOKEN_INT,
+
+    TOKEN_KEYWORD,
+    TOKEN_TYPE,
 
     TOKEN_STRING,
     TOKEN_CHAR,
@@ -120,6 +147,14 @@ bool is_identifier(const string& str) {
     return false;
 }
 
+bool is_keyword(const string& str) {
+    return keywords.find(str) != keywords.end();
+}
+
+bool is_type(const string& str) {
+    return types.find(str) != types.end();
+}
+
 Token::Token()  
             : kind(TOKEN_UNKNOWN), word(""), col(-1), row(-1) {}
 
@@ -127,11 +162,7 @@ Token::Token(string word, int row, int col)
             : kind(TOKEN_UNKNOWN), word(word), row(row), col(col) { check_type(); }
 
 void Token::print()  {
-    std::cout << "Token { " << std::endl <<
-                 "    Kind: " << kind << std::endl <<
-                 "    Token: \"" << word << "\"" << std::endl << 
-                 "    Row: " << row << " " << " Col: " << col << std::endl <<
-                 "}" << std::endl;
+    std::cout << "Token: \"" << word << "\"" << " kind: " << kind << std::endl;
 }
 
 Token *Token::END_OF_FILE() {
@@ -270,6 +301,12 @@ void Token::check_type() {
         else if (word == "||") {
             kind = TOKEN_OR;
         }
+        else if (is_keyword(word)) {
+            kind = TOKEN_KEYWORD;
+        }
+        else if (is_type(word)) {
+            kind = TOKEN_TYPE;
+        }
         else if (is_identifier(word)) {
             kind = TOKEN_IDENT;
         }
@@ -287,13 +324,6 @@ void Token::check_type() {
         }
     }
 }
-
-const std::string single_char_delims = "!@#$%^&*()_+-={}[]|\\:;\"\'<>,.?/`~";
-const std::unordered_set<std::string> multi_char_tokens = {
-    "<=", ">=", "==", "!=", "&&", "||", "++", "--",
-    "->", "=>", "||", "&&", "|>"
-};
-const std::string comment_start = "//";
 
 std::vector<Token> tokenize_with_positions(const std::string &source) {
     std::vector<Token> tokens;
@@ -396,12 +426,6 @@ std::vector<Token> tokenize_with_positions(const std::string &source) {
     tokens.push_back(Token("END OF FILE", -1, -1));
 
     return tokens;
-}
-
-void print_word(Token word) {
-    std::cout << "Token: \"" << word.word << "\"" << std::endl
-              << "    row: " << word.row << std::endl
-              << "    col: " << word.col << std::endl;
 }
 
 #endif // PARSER_IMPL_ 
