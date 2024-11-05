@@ -2,8 +2,8 @@
 #include <fstream>
 #include <vector>
 
-#define PARSER_IMPL_
-#include "src/parser.hpp"
+#define LEXER_IMPL_
+#include "src/lexer.hpp"
 
 typedef std::string string;
 

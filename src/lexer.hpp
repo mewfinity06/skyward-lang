@@ -1,5 +1,5 @@
-#ifndef PARSER_HPP_
-#define PARSER_HPP_
+#ifndef LEXER_HPP_
+#define LEXER_HPP_
 
 #include <iostream>
 #include <string>
@@ -11,6 +11,25 @@
 
 typedef std::string string;
 
+class Token {
+public:
+    TokenKind kind;
+    string word;
+    int row, col;
+
+public:
+    Token(string word, int row, int col);
+    Token();
+
+    void print();
+    void check_type();
+
+    Token *END_OF_FILE();
+
+};
+
+std::vector<Token> tokenize_with_positions(const std::string &source);
+void print_word(Token word);
 
 const std::string single_char_delims = "!@#$%^&*()_+-={}[]|\\:;\"\'<>,.?/`~";
 
@@ -103,27 +122,7 @@ enum TokenKind {
     TOKEN_UNKNOWN,
 };
 
-class Token {
-public:
-    TokenKind kind;
-    string word;
-    int row, col;
-
-public:
-    Token(string word, int row, int col);
-    Token();
-
-    void print();
-    void check_type();
-
-    Token *END_OF_FILE();
-
-};
-
-std::vector<Token> tokenize_with_positions(const std::string &source);
-void print_word(Token word);
-
-#endif // PARSER_HPP_
+#endif // LEXER_HPP_
 
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
@@ -131,7 +130,7 @@ void print_word(Token word);
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 
-#ifdef PARSER_IMPL_
+#ifdef LEXER_IMPL_
 
 bool can_convert_to_int(const string& str) {
     std::stringstream ss(str);
@@ -428,4 +427,4 @@ std::vector<Token> tokenize_with_positions(const std::string &source) {
     return tokens;
 }
 
-#endif // PARSER_IMPL_ 
+#endif // LEXER_IMPL_ 
