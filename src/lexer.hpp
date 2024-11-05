@@ -11,49 +11,6 @@
 
 typedef std::string string;
 
-class Token {
-public:
-    TokenKind kind;
-    string word;
-    int row, col;
-
-public:
-    Token(string word, int row, int col);
-    Token();
-
-    void print();
-    void check_type();
-
-    Token *END_OF_FILE();
-
-};
-
-std::vector<Token> tokenize_with_positions(const std::string &source);
-void print_word(Token word);
-
-const std::string single_char_delims = "!@#$%^&*()_+-={}[]|\\:;\"\'<>,.?/`~";
-
-const std::string comment_start = "//";
-
-const std::unordered_set<std::string> multi_char_tokens = {
-    "<=", ">=", "==", "!=", "&&", "||", "++", "--", "**",
-    "->", "=>", "||", "&&", "|>",
-};
-
-const std::unordered_set<std::string> types = {
-    "Int", "Float", "Char", "String", "Byte", "Bool",
-    "Void", "None", "Enum", "Compact", "Loose", "Union",
-    "Vector", "Matrix", "Error", "Complex", "Usize",
-    "Isize"
-};
-
-const std::unordered_set<std::string> keywords = {
-    "func", "private", "public", "struct", "switch",
-    "return", "else", "finally", "impl", "const", "mut",
-    "defer", "break", "continue", "for", "while",
-    "signed", "unsigned", "use", "as"
-};
-
 enum TokenKind {
     // Multichar tokens
     TOKEN_IDENT,
@@ -122,7 +79,54 @@ enum TokenKind {
     TOKEN_UNKNOWN,
 };
 
-#endif // LEXER_HPP_
+string token_kind_to_string(TokenKind kind);
+
+class Token {
+public:
+    TokenKind kind;
+    string word;
+
+    string file_path;
+    int row, col;
+
+public:
+    Token(string word, string file_path, int row, int col);
+    Token();
+
+    void print();
+    void check_type();
+    void debug();
+
+    Token *END_OF_FILE();
+
+};
+
+std::vector<Token> tokenize_with_positions(const std::string file_path);
+
+const std::string single_char_delims = "!@#$%^&*()_+-={}[]|\\:;\"\'<>,.?/`~";
+
+const std::string comment_start = "//";
+
+const std::unordered_set<std::string> multi_char_tokens = {
+    "<=", ">=", "==", "!=", "&&", "||", "++", "--", "**",
+    "->", "=>", "||", "&&", "|>", ":=",
+};
+
+const std::unordered_set<std::string> types = {
+    "Int", "Float", "Char", "String", "Byte", "Bool",
+    "Void", "None", "Enum", "Compact", "Loose", "Union",
+    "Vector", "Matrix", "Error", "Complex", "Usize",
+    "Isize"
+};
+
+const std::unordered_set<std::string> keywords = {
+    "func", "private", "public", "struct", "switch",
+    "return", "else", "finally", "impl", "const", "mut",
+    "defer", "break", "continue", "for", "while",
+    "signed", "unsigned", "use", "as"
+};
+
+#endif // PARSER_HPP_
 
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
@@ -157,11 +161,19 @@ bool is_type(const string& str) {
 Token::Token()  
             : kind(TOKEN_UNKNOWN), word(""), col(-1), row(-1) {}
 
-Token::Token(string word, int row, int col) 
-            : kind(TOKEN_UNKNOWN), word(word), row(row), col(col) { check_type(); }
+Token::Token(string file_path, string word, int row, int col) 
+            : kind(TOKEN_UNKNOWN), word(word), row(row), col(col), file_path(file_path) { check_type(); }
 
 void Token::print()  {
-    std::cout << "Token: \"" << word << "\"" << " kind: " << kind << std::endl;
+    std::cout << file_path << ":" << row << ":" << col << " |  '" << word << "' \t | " << token_kind_to_string(kind) << std::endl;
+}
+
+void Token::debug() {
+    std::cout << "[debug] Token {" << std::endl
+              << "    Word: " << word << std::endl
+              << "    Kind: " << token_kind_to_string(kind) << std::endl
+              << "    Row: " << row << " Col: " << col << std::endl;
+    std::cout << "}" << std::endl;
 }
 
 Token *Token::END_OF_FILE() {
@@ -324,17 +336,82 @@ void Token::check_type() {
     }
 }
 
-std::vector<Token> tokenize_with_positions(const std::string &source) {
+string token_kind_to_string(TokenKind kind) {
+    switch (kind) {
+        case TOKEN_IDENT:               return "TOKEN_IDENT";
+        case TOKEN_INT:                 return "TOKEN_INT";
+        case TOKEN_KEYWORD:             return "TOKEN_KEYWORD";
+        case TOKEN_TYPE:                return "TOKEN_TYPE";
+        case TOKEN_STRING:              return "TOKEN_STRING";
+        case TOKEN_CHAR:                return "TOKEN_CHAR";
+        case TOKEN_PLUS:                return "TOKEN_PLUS";
+        case TOKEN_MINUS:               return "TOKEN_MINUS";
+        case TOKEN_STAR:                return "TOKEN_STAR";
+        case TOKEN_DIVIDE:              return "TOKEN_DIVIDE";
+        case TOKEN_MOD:                 return "TOKEN_MOD";
+        case TOKEN_ASSIGNMENT:          return "TOKEN_ASSIGNMENT";
+        case TOKEN_IMPLICIT_ASSIGNMENT: return "TOKEN_IMPLICIT_ASSIGNMENT";
+        case TOKEN_OPEN_PAREN:          return "TOKEN_OPEN_PAREN";
+        case TOKEN_CLOSE_PAREN:         return "TOKEN_CLOSE_PAREN";
+        case TOKEN_OPEN_BRACKET:        return "TOKEN_OPEN_BRACKET";
+        case TOKEN_CLOSE_BRACKET:       return "TOKEN_CLOSE_BRACKET";
+        case TOKEN_OPEN_CURLY:          return "TOKEN_OPEN_CURLY";
+        case TOKEN_CLOSE_CURLY:         return "TOKEN_CLOSE_CURLY";
+        case TOKEN_BANG:                return "TOKEN_BANG";
+        case TOKEN_ABROSE:              return "TOKEN_ABROSE";
+        case TOKEN_POUND:               return "TOKEN_POUND";
+        case TOKEN_CARROT:              return "TOKEN_CARROT";
+        case TOKEN_AMPERSAND:           return "TOKEN_AMPERSAND";
+        case TOKEN_PIPE:                return "TOKEN_PIPE";
+        case TOKEN_LEFT_ARROW:          return "TOKEN_LEFT_ARROW";
+        case TOKEN_RIGHT_ARROW:         return "TOKEN_RIGHT_ARROW";
+        case TOKEN_COLON:               return "TOKEN_COLON";
+        case TOKEN_SEMI_COLON:          return "TOKEN_SEMI_COLON";
+        case TOKEN_COMMA:               return "TOKEN_COMMA";
+        case TOKEN_FULL_STOP:           return "TOKEN_FULL_STOP";
+        case TOKEN_QUESTION:            return "TOKEN_QUESTION";
+        case TOKEN_BACK_TICK:           return "TOKEN_BACK_TICK";
+        case TOKEN_TILDA:               return "TOKEN_TILDA";
+        case TOKEN_BACK_SLASH:          return "TOKEN_BACK_SLASH";          
+        case TOKEN_EQUALS:              return "TOKEN_EQUALS";
+        case TOKEN_NOT_EQUALS:          return "TOKEN_NOT_EQUALS";
+        case TOKEN_GREATER_EQUALS:      return "TOKEN_GREATER_EQUALS";
+        case TOKEN_LESSER_EQUALS:       return "TOKEN_LESSER_EQUALS";
+        case TOKEN_FAT_ARROW:           return "TOKEN_FAT_ARROW";
+        case TOKEN_THIN_ARROW:          return "TOKEN_THIN_ARROW";
+        case TOKEN_PIPE_LINE:           return "TOKEN_PIPE_LINE";
+        case TOKEN_PLUS_PLUS:           return "TOKEN_PLUS_PLUS";
+        case TOKEN_MINUS_MINUS:         return "TOKEN_MINUS_MINUS";
+        case TOKEN_STAR_STAR:           return "TOKEN_STAR_STAR";
+        case TOKEN_AND:                 return "TOKEN_AND";
+        case TOKEN_OR:                  return "TOKEN_OR";
+        case TOKEN_EOF:                 return "TOKEN_EOF";
+        case TOKEN_UNKNOWN:             return "TOKEN_UNKNOWN";
+        default:                        return "UNKNOWN_TOKEN_KIND";
+    }
+}
+
+
+std::vector<Token> tokenize_with_positions(const std::string file_path) {
     std::vector<Token> tokens;
     size_t start = 0;
     int row = 1, col = 1;
+
+    std::ifstream t(file_path);
+    t.seekg(0, std::ios::end);
+    size_t size = t.tellg();
+    char* buffer = (char*) malloc(size);
+    t.seekg(0);
+    t.read(&buffer[0], size);
+
+    string source = buffer;
 
     for (size_t end = 0; end < source.size(); ++end) {
         // Check for single-line comments
         if (source.substr(end, 2) == comment_start) {
             // Add the preceding token if any
             if (start < end) {
-                tokens.push_back(Token(source.substr(start, end - start), row, col - static_cast<int>(end - start)));
+                tokens.push_back(Token(file_path, source.substr(start, end - start), row, col - static_cast<int>(end - start)));
             }
             // Move end to the end of the line
             while (end < source.size() && source[end] != '\n') {
@@ -352,10 +429,10 @@ std::vector<Token> tokenize_with_positions(const std::string &source) {
             if (multi_char_tokens.find(two_char_token) != multi_char_tokens.end()) {
                 // Add the preceding word token if any
                 if (start < end) {
-                    tokens.push_back(Token(source.substr(start, end - start), row, col - static_cast<int>(end - start)));
+                    tokens.push_back(Token(file_path, source.substr(start, end - start), row, col - static_cast<int>(end - start)));
                 }
                 // Add the two-character token
-                tokens.push_back(Token(two_char_token, row, col));
+                tokens.push_back(Token(file_path, two_char_token, row, col));
                 start = end + 2;
                 col += 2;
                 end++;
@@ -387,7 +464,7 @@ std::vector<Token> tokenize_with_positions(const std::string &source) {
                 col++;
             }
 
-            tokens.push_back(Token(source.substr(literal_start, end - literal_start), row, col - static_cast<int>(end - literal_start)));
+            tokens.push_back(Token(file_path, source.substr(literal_start, end - literal_start), row, col - static_cast<int>(end - literal_start)));
             start = end;
             continue;
         }
@@ -395,9 +472,9 @@ std::vector<Token> tokenize_with_positions(const std::string &source) {
         // Single-character delimiter handling
         if (single_char_delims.find(source[end]) != std::string::npos) {
             if (start < end) {
-                tokens.push_back(Token(source.substr(start, end - start), row, col - static_cast<int>(end - start)));
+                tokens.push_back(Token(file_path,  source.substr(start, end - start), row, col - static_cast<int>(end - start)));
             }
-            tokens.push_back(Token(std::string(1, source[end]), row, col));
+            tokens.push_back(Token(file_path, std::string(1, source[end]), row, col));
             start = end + 1;
             col++;
         } else if (std::isspace(source[end])) {
@@ -409,7 +486,7 @@ std::vector<Token> tokenize_with_positions(const std::string &source) {
                 col++;
             }
             if (start < end) {
-                tokens.push_back(Token(source.substr(start, end - start), row, col - static_cast<int>(end - start)));
+                tokens.push_back(Token(file_path, source.substr(start, end - start), row, col - static_cast<int>(end - start)));
             }
             start = end + 1;
         } else {
@@ -419,12 +496,12 @@ std::vector<Token> tokenize_with_positions(const std::string &source) {
 
     // Add the last token if any
     if (start < source.size()) {
-        tokens.push_back(Token(source.substr(start), row, col - static_cast<int>(source.size() - start)));
+        tokens.push_back(Token(file_path, source.substr(start), row, col - static_cast<int>(source.size() - start)));
     }
 
-    tokens.push_back(Token("END OF FILE", -1, -1));
+    tokens.push_back(Token(file_path, "END OF FILE", -1, -1));
 
     return tokens;
 }
 
-#endif // LEXER_IMPL_ 
+#endif // PARSER_IMPL_ 
