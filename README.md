@@ -30,8 +30,12 @@ Although Skyward operates close to the hardware, it remains feature-rich and ver
 ## Usage
 
 ```bash
-./skyward <path_to_file>
+./skyward <flags> <path_to_file>
 ```
+
+### Flags
+
+- debug, -d | Puts Skyward in debug mode (for developer use only)
 
 ## Features
 
