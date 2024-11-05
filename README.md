@@ -4,6 +4,21 @@
 
 Simple reason? I was bored.
 
+## Inspiration
+
+### Youtubers
+
+- [Lens_r's FUNCompiler]((https://github.com/LensPlaysGames/LensorCompilerCollection))
+- [Tsoding's Porth](https://gitlab.com/tsoding/porth)
+
+### Languages
+
+- [Rust]((https://www.rust-lang.org/))
+- [C](https://en.cppreference.com/w/c)
+- [Odin](https://odin-lang.org/)
+- [Gleam](https://gleam.run/)
+- [Go](https://go.dev/)
+
 ## Design Philosophy
 
 Skyward draws significant inspiration from established languages like C and Rust, aiming to operate close to the hardware and provide developers with direct access to the systems they value. Prioritizing speed and efficiency, Skyward is designed to be both high-performing and ergonomic.
