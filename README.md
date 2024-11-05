@@ -4,6 +4,20 @@
 
 Simple reason? I was bored.
 
+## Design Philosophy
+
+Skyward takes great inspiration from greats like C and Rust. I want to create a langauge that works close to the metal--allowing for users to actually interface with the systems that they love to use! I believe that speed and effience is key to a good language and it should be ergonomic.
+
+Langauges like C++ are too bloated for average use. Skyward strives to have a small and reliable core library that is easy for anyone to memorize. Every user should know what their langauge can do.
+
+Just becuase Skyward works close to the hardware, doesn't mean that you are limited by little features. Skyward is packed with everyday features that modern languages should have. Vectors, Matrixes, and different sized Structs barely scratch the surface of what Skyward is capable of.
+
+## Usage
+
+```bash
+./skyward <path_to_file>
+```
+
 ## Basic Syntax
 
 ```rust
