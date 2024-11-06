@@ -3,7 +3,12 @@
 #include <vector>
 
 #define LEXER_IMPL_
+#define PARSER_IMPL_
+#define ERROR_IMPL_
+
 #include "src/lexer.hpp"
+#include "src/parser.hpp"
+#include "src/error.hpp"
 
 typedef std::string string;
 
@@ -12,7 +17,7 @@ bool DEBUG = false;
 void usage(char **argv) {
     std::cout << "Usage: " << argv[0] << " <flags> <path_to_file>" << std::endl;
     std::cout << "Flags:" << std::endl;
-    std::cout << "    -d    Debug" << std::endl;
+    std::cout << "    -d, -debug    Debug" << std::endl;
 }
 
 void print_tokens(std::vector<Token> tokens) {
@@ -61,7 +66,7 @@ int main(int argc, char **argv) {
     }
 
     for (int i = 0; i < flags.size(); ++i) {
-        if (flags.at(i) == "-d") {
+        if (flags.at(i) == "-d" || flags.at(i) == "-debug") {
             DEBUG = true;
         }
     }
