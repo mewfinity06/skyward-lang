@@ -8,6 +8,7 @@
 #include <unordered_set>
 #include <sstream>
 
+#include "error.hpp"
 
 typedef std::string string;
 
@@ -121,7 +122,7 @@ const std::unordered_set<std::string> types = {
 
 const std::unordered_set<std::string> keywords = {
     "func", "private", "public", "struct", "switch",
-    "return", "else", "finally", "impl", "const", "mut",
+    "return", "if", "else", "finally", "impl", "const", "mut",
     "defer", "break", "continue", "for", "while",
     "signed", "unsigned", "use", "as"
 };
@@ -158,11 +159,14 @@ bool is_type(const string& str) {
     return types.find(str) != types.end();
 }
 
-Token::Token()  
-            : kind(TOKEN_UNKNOWN), word(""), col(-1), row(-1) {}
+Token::Token() : kind(TOKEN_UNKNOWN), word(""), col(-1), row(-1) {}
 
-Token::Token(string file_path, string word, int row, int col) 
-            : kind(TOKEN_UNKNOWN), word(word), row(row), col(col), file_path(file_path) { check_type(); }
+Token::Token(string file_path, string word, int row, int col) : 
+            kind(TOKEN_UNKNOWN), word(word), 
+            row(row), col(col), file_path(file_path) 
+{ 
+    check_type(); 
+}
 
 void Token::print()  {
     std::cout << file_path << ":" << row << ":" << col << " |  '" << word << "' \t | " << token_kind_to_string(kind) << std::endl;
@@ -393,14 +397,24 @@ string token_kind_to_string(TokenKind kind) {
 
 
 std::vector<Token> tokenize_with_positions(const std::string file_path) {
+
     std::vector<Token> tokens;
     size_t start = 0;
     int row = 1, col = 1;
+
+    Error err = Error();
 
     std::ifstream t(file_path);
     t.seekg(0, std::ios::end);
     size_t size = t.tellg();
     char* buffer = (char*) malloc(size);
+
+    if (!buffer) {
+        err = Error(Error::ErrorMemory, "Could not allocate memory for buffer");
+        err.print();
+        return tokens;
+    }
+
     t.seekg(0);
     t.read(&buffer[0], size);
 
