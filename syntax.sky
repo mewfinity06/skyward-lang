@@ -111,7 +111,7 @@ func specialTypes : None {
 
     // Errors
     const err := Error{
-        type:    ErrorGeneric,
+        type:    Error::ErrorGeneric,
         message: "This is an error!",
     }
 
