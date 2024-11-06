@@ -11,3 +11,5 @@
 ## Minor Things
 
 - [ ] Better Token Debug and Print
+- [ ] Change all implimentations from header-only to distince `.hpp` and `.cpp` files. Create better file management.
+  - After, switch to `pragma once`
