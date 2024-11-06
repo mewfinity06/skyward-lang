@@ -19,7 +19,7 @@ EmployeeStatus : impl {
     // Traditional functions must explicitly call
     // self as the fist parameter.
     public func human : Char* {
-        switch(self) {
+        switch self {
         ADMIN   => return "Admin";
         MANAGER => return "Manager";
         ENTRY   => return "Entry";
