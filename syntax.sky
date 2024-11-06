@@ -10,8 +10,7 @@ use io.endline as endline;
 // String 
 // Byte 
 // Bool 
-// Void -> used for pointers. i.e. Void*
-// None 
+// Void* -> used for pointers
 // Usize
 // Isize
 
@@ -20,6 +19,7 @@ use io.endline as endline;
 // Compact -> struct type
 // Loose   -> struct type
 // Union   -> struct type
+// None 
 // Vector
 // Matrix
 // Error
@@ -238,9 +238,9 @@ struct Employee : Compact {
         MANAGER, // 1000
         ENTRY,   // 2000
         GUEST,   // 3000
-    }
-    Name: String;
-    ID:   Int;
+    },
+    Name: String,
+    ID:   Int,
 }
 
 // Define member functions for Employee
