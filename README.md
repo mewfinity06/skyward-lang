@@ -35,7 +35,7 @@ Although Skyward operates close to the hardware, it remains feature-rich and ver
 
 ### Flags
 
-- debug, -d | Puts Skyward in debug mode (for developer use only)
+- -debug, -d | Puts Skyward in debug mode (for developer use only)
 
 ## Features
 
@@ -55,6 +55,8 @@ Although Skyward operates close to the hardware, it remains feature-rich and ver
     - All unsigned member functions ASSUME `self`
 
 ## Basic Syntax
+
+### [To see more syntax, see this](syntax.sky)
 
 ```rust
 use io; // Import the IO library
