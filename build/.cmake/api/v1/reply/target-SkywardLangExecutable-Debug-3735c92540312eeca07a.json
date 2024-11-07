@@ -2,10 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "application/SkywardLangExecutable.exe"
-		},
-		{
-			"path" : "application/SkywardLangExecutable.pdb"
+			"path" : "application/SkywardLangExecutable"
 		}
 	],
 	"backtrace" : 1,
@@ -28,13 +25,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 22,
+				"line" : 25,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 29,
+				"line" : 32,
 				"parent" : 0
 			}
 		]
@@ -52,7 +49,11 @@
 			[
 				{
 					"backtrace" : 2,
-					"path" : "F:/dev/skyward_lang/application/include"
+					"path" : "/home/mewfinity/Dev/Skyward/application/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/mewfinity/Dev/Skyward/application/external"
 				}
 			],
 			"language" : "CXX",
@@ -85,16 +86,12 @@
 			{
 				"fragment" : "",
 				"role" : "flags"
-			},
-			{
-				"fragment" : "-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
-				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
 	},
 	"name" : "SkywardLangExecutable",
-	"nameOnDisk" : "SkywardLangExecutable.exe",
+	"nameOnDisk" : "SkywardLangExecutable",
 	"paths" : 
 	{
 		"build" : "application",

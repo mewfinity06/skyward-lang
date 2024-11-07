@@ -8,10 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "F:/dev/skyward_lang/application/main.cpp" "application/CMakeFiles/SkywardLangExecutable.dir/main.cpp.obj" "gcc" "application/CMakeFiles/SkywardLangExecutable.dir/main.cpp.obj.d"
-  "F:/dev/skyward_lang/application/src/error.cpp" "application/CMakeFiles/SkywardLangExecutable.dir/src/error.cpp.obj" "gcc" "application/CMakeFiles/SkywardLangExecutable.dir/src/error.cpp.obj.d"
-  "F:/dev/skyward_lang/application/src/lexer.cpp" "application/CMakeFiles/SkywardLangExecutable.dir/src/lexer.cpp.obj" "gcc" "application/CMakeFiles/SkywardLangExecutable.dir/src/lexer.cpp.obj.d"
-  "F:/dev/skyward_lang/application/src/parser.cpp" "application/CMakeFiles/SkywardLangExecutable.dir/src/parser.cpp.obj" "gcc" "application/CMakeFiles/SkywardLangExecutable.dir/src/parser.cpp.obj.d"
+  "/home/mewfinity/Dev/Skyward/application/main.cpp" "application/CMakeFiles/SkywardLangExecutable.dir/main.cpp.o" "gcc" "application/CMakeFiles/SkywardLangExecutable.dir/main.cpp.o.d"
+  "/home/mewfinity/Dev/Skyward/application/src/error.cpp" "application/CMakeFiles/SkywardLangExecutable.dir/src/error.cpp.o" "gcc" "application/CMakeFiles/SkywardLangExecutable.dir/src/error.cpp.o.d"
+  "/home/mewfinity/Dev/Skyward/application/src/lexer.cpp" "application/CMakeFiles/SkywardLangExecutable.dir/src/lexer.cpp.o" "gcc" "application/CMakeFiles/SkywardLangExecutable.dir/src/lexer.cpp.o.d"
+  "/home/mewfinity/Dev/Skyward/application/src/parser.cpp" "application/CMakeFiles/SkywardLangExecutable.dir/src/parser.cpp.o" "gcc" "application/CMakeFiles/SkywardLangExecutable.dir/src/parser.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -62,5 +62,5 @@ int main(int argc, char **argv) {
     }
 
     vector<Token> words = tokenize_with_positions(path);
-
+    debug_tokens(words);
 }
