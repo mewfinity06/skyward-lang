@@ -10,6 +10,7 @@ set(APPLICATION_HEADERS
 	${APPLICATION_HEADERS_DIR}/lexer.hpp
 	${APPLICATION_HEADERS_DIR}/parser.hpp
 	${APPLICATION_HEADERS_DIR}/common.hpp
+	${APPLICATION_HEADERS_DIR}/flag.hpp
 )
 
 # .cpp files
@@ -18,6 +19,7 @@ set(APPLICATION_SRC
 	${APPLICATION_SRC_DIR}/error.cpp
 	${APPLICATION_SRC_DIR}/lexer.cpp
 	${APPLICATION_SRC_DIR}/parser.cpp
+	${APPLICATION_SRC_DIR}/flag.cpp
 )
 
 

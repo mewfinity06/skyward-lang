@@ -104,12 +104,12 @@ application/clean: application/CMakeFiles/SkywardLangExecutable.dir/clean
 application/CMakeFiles/SkywardLangExecutable.dir/all:
 	$(MAKE) $(MAKESILENT) -f application/CMakeFiles/SkywardLangExecutable.dir/build.make application/CMakeFiles/SkywardLangExecutable.dir/depend
 	$(MAKE) $(MAKESILENT) -f application/CMakeFiles/SkywardLangExecutable.dir/build.make application/CMakeFiles/SkywardLangExecutable.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/mewfinity/Dev/Skyward/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target SkywardLangExecutable"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/mewfinity/Dev/Skyward/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target SkywardLangExecutable"
 .PHONY : application/CMakeFiles/SkywardLangExecutable.dir/all
 
 # Build rule for subdir invocation for target.
 application/CMakeFiles/SkywardLangExecutable.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mewfinity/Dev/Skyward/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mewfinity/Dev/Skyward/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 application/CMakeFiles/SkywardLangExecutable.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/mewfinity/Dev/Skyward/build/CMakeFiles 0
 .PHONY : application/CMakeFiles/SkywardLangExecutable.dir/rule

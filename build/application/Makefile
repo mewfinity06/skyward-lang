@@ -178,6 +178,30 @@ src/error.cpp.s:
 	cd /home/mewfinity/Dev/Skyward/build && $(MAKE) $(MAKESILENT) -f application/CMakeFiles/SkywardLangExecutable.dir/build.make application/CMakeFiles/SkywardLangExecutable.dir/src/error.cpp.s
 .PHONY : src/error.cpp.s
 
+src/flag.o: src/flag.cpp.o
+.PHONY : src/flag.o
+
+# target to build an object file
+src/flag.cpp.o:
+	cd /home/mewfinity/Dev/Skyward/build && $(MAKE) $(MAKESILENT) -f application/CMakeFiles/SkywardLangExecutable.dir/build.make application/CMakeFiles/SkywardLangExecutable.dir/src/flag.cpp.o
+.PHONY : src/flag.cpp.o
+
+src/flag.i: src/flag.cpp.i
+.PHONY : src/flag.i
+
+# target to preprocess a source file
+src/flag.cpp.i:
+	cd /home/mewfinity/Dev/Skyward/build && $(MAKE) $(MAKESILENT) -f application/CMakeFiles/SkywardLangExecutable.dir/build.make application/CMakeFiles/SkywardLangExecutable.dir/src/flag.cpp.i
+.PHONY : src/flag.cpp.i
+
+src/flag.s: src/flag.cpp.s
+.PHONY : src/flag.s
+
+# target to generate assembly for a file
+src/flag.cpp.s:
+	cd /home/mewfinity/Dev/Skyward/build && $(MAKE) $(MAKESILENT) -f application/CMakeFiles/SkywardLangExecutable.dir/build.make application/CMakeFiles/SkywardLangExecutable.dir/src/flag.cpp.s
+.PHONY : src/flag.cpp.s
+
 src/lexer.o: src/lexer.cpp.o
 .PHONY : src/lexer.o
 
@@ -241,6 +265,9 @@ help:
 	@echo "... src/error.o"
 	@echo "... src/error.i"
 	@echo "... src/error.s"
+	@echo "... src/flag.o"
+	@echo "... src/flag.i"
+	@echo "... src/flag.s"
 	@echo "... src/lexer.o"
 	@echo "... src/lexer.i"
 	@echo "... src/lexer.s"

@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/mewfinity/Dev/Skyward/application/main.cpp" "application/CMakeFiles/SkywardLangExecutable.dir/main.cpp.o" "gcc" "application/CMakeFiles/SkywardLangExecutable.dir/main.cpp.o.d"
   "/home/mewfinity/Dev/Skyward/application/src/error.cpp" "application/CMakeFiles/SkywardLangExecutable.dir/src/error.cpp.o" "gcc" "application/CMakeFiles/SkywardLangExecutable.dir/src/error.cpp.o.d"
+  "/home/mewfinity/Dev/Skyward/application/src/flag.cpp" "application/CMakeFiles/SkywardLangExecutable.dir/src/flag.cpp.o" "gcc" "application/CMakeFiles/SkywardLangExecutable.dir/src/flag.cpp.o.d"
   "/home/mewfinity/Dev/Skyward/application/src/lexer.cpp" "application/CMakeFiles/SkywardLangExecutable.dir/src/lexer.cpp.o" "gcc" "application/CMakeFiles/SkywardLangExecutable.dir/src/lexer.cpp.o.d"
   "/home/mewfinity/Dev/Skyward/application/src/parser.cpp" "application/CMakeFiles/SkywardLangExecutable.dir/src/parser.cpp.o" "gcc" "application/CMakeFiles/SkywardLangExecutable.dir/src/parser.cpp.o.d"
   )

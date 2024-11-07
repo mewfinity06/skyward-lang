@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/SkywardLangExecutable.dir/main.cpp.o.d"
   "CMakeFiles/SkywardLangExecutable.dir/src/error.cpp.o"
   "CMakeFiles/SkywardLangExecutable.dir/src/error.cpp.o.d"
+  "CMakeFiles/SkywardLangExecutable.dir/src/flag.cpp.o"
+  "CMakeFiles/SkywardLangExecutable.dir/src/flag.cpp.o.d"
   "CMakeFiles/SkywardLangExecutable.dir/src/lexer.cpp.o"
   "CMakeFiles/SkywardLangExecutable.dir/src/lexer.cpp.o.d"
   "CMakeFiles/SkywardLangExecutable.dir/src/parser.cpp.o"
