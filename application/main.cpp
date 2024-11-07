@@ -4,8 +4,6 @@
 #include "parser.hpp"
 #include "error.hpp"
 
-
-
 void usage(char **argv) {
     std::cout << "Usage: " << argv[0] << " <flags> <path_to_file>" << std::endl;
     std::cout << "Flags:" << std::endl;
@@ -44,7 +42,7 @@ string get_file_contents(string file_path) {
 int main(int argc, char **argv) {
 
     string path;
-    std::vector<string> flags;
+    vector<string> flags;
 
     if (argc < 2) {
         usage(argv);
@@ -63,6 +61,6 @@ int main(int argc, char **argv) {
         }
     }
 
-    std::vector<Token> words = tokenize_with_positions(path);
+    vector<Token> words = tokenize_with_positions(path);
 
 }

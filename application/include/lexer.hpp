@@ -9,9 +9,6 @@
 // Forward declarations
 class Token;
 
-
-
-
 const std::string single_char_delims = "!@#$%^&*()_+-={}[]|\\:;\"\'<>,.?/`~";
 
 const std::string comment_start = "//";
@@ -121,7 +118,7 @@ bool is_type(const string& str);
 // token functions
 string token_kind_to_string(TokenKind kind);
 
-std::vector<Token> tokenize_with_positions(const std::string file_path);
+vector<Token> tokenize_with_positions(const std::string file_path);
 
 class Token {
 public:
