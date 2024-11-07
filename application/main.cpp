@@ -12,7 +12,7 @@ void usage(char **argv) {
     std::cout << "    -d, -debug    Debug" << std::endl;
 }
 
-void print_tokens(std::vector<Token> tokens) {
+void print_tokens(vector<Token> tokens) {
     int total = 0;
     for (int i = 0; i < tokens.size(); ++i) {
         tokens[i].print();

@@ -2,15 +2,40 @@
 #include <cctype>
 #include <unordered_set>
 #include <sstream>
-
+#include <fstream>
 #include "common.hpp"
-
 #include "error.hpp"
 
-// Forward declaration
+// Forward declarations
 class Token;
 
-enum TokenKind {
+
+
+
+const std::string single_char_delims = "!@#$%^&*()_+-={}[]|\\:;\"\'<>,.?/`~";
+
+const std::string comment_start = "//";
+
+const std::unordered_set<std::string> multi_char_tokens = {
+    "<=", ">=", "==", "!=", "&&", "||", "++", "--", "**",
+    "->", "=>", "||", "&&", "|>", ":=",
+};
+
+const std::unordered_set<std::string> types = {
+    "Int", "Float", "Char", "String", "Byte", "Bool",
+    "Void", "None", "Enum", "Compact", "Loose", "Union",
+    "Vector", "Matrix", "Error", "Complex", "Usize",
+    "Isize"
+};
+
+const std::unordered_set<std::string> keywords = {
+    "func", "private", "public", "struct", "switch",
+    "return", "if", "else", "finally", "impl", "const", "mut",
+    "defer", "break", "continue", "for", "while",
+    "signed", "unsigned", "use", "as"
+};
+
+enum class TokenKind {
     // Multichar tokens
     TOKEN_IDENT,
     TOKEN_INT,
@@ -78,8 +103,6 @@ enum TokenKind {
     TOKEN_UNKNOWN,
 };
 
-string token_kind_to_string(TokenKind kind);
-
 // Checkers
 bool can_convert_to_int(const string& str);
 
@@ -89,36 +112,16 @@ bool is_keyword(const string& str);
 
 bool is_type(const string& str);
 
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+// token functions
+string token_kind_to_string(TokenKind kind);
+
 std::vector<Token> tokenize_with_positions(const std::string file_path);
-
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-
-const std::string single_char_delims = "!@#$%^&*()_+-={}[]|\\:;\"\'<>,.?/`~";
-
-const std::string comment_start = "//";
-
-const std::unordered_set<std::string> multi_char_tokens = {
-    "<=", ">=", "==", "!=", "&&", "||", "++", "--", "**",
-    "->", "=>", "||", "&&", "|>", ":=",
-};
-
-const std::unordered_set<std::string> types = {
-    "Int", "Float", "Char", "String", "Byte", "Bool",
-    "Void", "None", "Enum", "Compact", "Loose", "Union",
-    "Vector", "Matrix", "Error", "Complex", "Usize",
-    "Isize"
-};
-
-const std::unordered_set<std::string> keywords = {
-    "func", "private", "public", "struct", "switch",
-    "return", "if", "else", "finally", "impl", "const", "mut",
-    "defer", "break", "continue", "for", "while",
-    "signed", "unsigned", "use", "as"
-};
 
 class Token {
 public:

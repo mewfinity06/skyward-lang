@@ -4,8 +4,11 @@
 #include <vector>
 #include <cstdlib> // C++ standard library
 
-#ifndef DEBUG
-#define DEBUG false
-#endif
+static inline bool DEBUG = false;
 
-typedef std::string string;
+// Removes the need for std:: prefix
+using std::string;
+using std::vector;
+using std::cout;
+using std::cin;
+using std::endl;

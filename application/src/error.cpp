@@ -1,12 +1,11 @@
 #include "error.hpp"
 
-#ifdef ERROR_IMPL_
 
-inline Error::Error(ErrorKind kind, string message) : kind(kind), message(message) {}
+Error::Error(ErrorKind kind, string message) : kind(kind), message(message) {}
 
-inline Error::Error() : kind(ErrorOkay), message("Okay") {}
+Error::Error() : kind(ErrorOkay), message("Okay") {}
 
-inline void Error::print() {
+void Error::print() {
     if (kind == ErrorOkay) { return; }
     switch (kind) {
     case ErrorGeneric:  std::cout << "Error";           break;
@@ -23,9 +22,8 @@ inline void Error::print() {
     std::cout << ": " << message << std::endl;
 }
 
-inline bool Error::is_okay() {
+bool Error::is_okay() {
     if (kind == ErrorOkay) { return true; }
     return false;
 }
 
-#endif

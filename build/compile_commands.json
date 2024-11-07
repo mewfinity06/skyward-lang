@@ -1,0 +1,26 @@
+[
+{
+  "directory": "F:/dev/skyward_lang/build/application",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/SkywardLangExecutable.dir/includes_CXX.rsp -g -std=gnu++20 -o CMakeFiles\\SkywardLangExecutable.dir\\main.cpp.obj -c F:\\dev\\skyward_lang\\application\\main.cpp",
+  "file": "F:/dev/skyward_lang/application/main.cpp",
+  "output": "application/CMakeFiles/SkywardLangExecutable.dir/main.cpp.obj"
+},
+{
+  "directory": "F:/dev/skyward_lang/build/application",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/SkywardLangExecutable.dir/includes_CXX.rsp -g -std=gnu++20 -o CMakeFiles\\SkywardLangExecutable.dir\\src\\error.cpp.obj -c F:\\dev\\skyward_lang\\application\\src\\error.cpp",
+  "file": "F:/dev/skyward_lang/application/src/error.cpp",
+  "output": "application/CMakeFiles/SkywardLangExecutable.dir/src/error.cpp.obj"
+},
+{
+  "directory": "F:/dev/skyward_lang/build/application",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/SkywardLangExecutable.dir/includes_CXX.rsp -g -std=gnu++20 -o CMakeFiles\\SkywardLangExecutable.dir\\src\\lexer.cpp.obj -c F:\\dev\\skyward_lang\\application\\src\\lexer.cpp",
+  "file": "F:/dev/skyward_lang/application/src/lexer.cpp",
+  "output": "application/CMakeFiles/SkywardLangExecutable.dir/src/lexer.cpp.obj"
+},
+{
+  "directory": "F:/dev/skyward_lang/build/application",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/SkywardLangExecutable.dir/includes_CXX.rsp -g -std=gnu++20 -o CMakeFiles\\SkywardLangExecutable.dir\\src\\parser.cpp.obj -c F:\\dev\\skyward_lang\\application\\src\\parser.cpp",
+  "file": "F:/dev/skyward_lang/application/src/parser.cpp",
+  "output": "application/CMakeFiles/SkywardLangExecutable.dir/src/parser.cpp.obj"
+}
+]
