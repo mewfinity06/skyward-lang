@@ -1,63 +1,58 @@
 use io; // Import the IO library
 
-// Declare an Enum Struct
-struct EmployeeStatus : Enum {
-    @start 0; // Has the first element (ADMIN) start at 0
-    @step 1000; // Each element increases by 1000
-
-    ADMIN,   // 0000
-    MANAGER, // 1000
-    ENTRY,   // 2000
-    GUEST,   // 3000
-}
-
-// Member functions for EmployeeStatus
-EmployeeStatus : impl {
-
-    // Declare an untyped function (working name)
-    // With untyped functions, self is assumed.
-    // Traditional functions must explicitly call
-    // self as the fist parameter.
-    public func human : Char* {
-        switch self {
-        ADMIN   => return "Admin";
-        MANAGER => return "Manager";
-        ENTRY   => return "Entry";
-        GUEST   => return "Guest";
-        else    => return "Unknown";
-        }
-    }
-}
-
-// Declare a Compact Struct
+// Struct definition
 struct Employee : Compact {
-    Status: EmployeeStatus,
-    Name:   Char*,
-    ID:     Int,
+    Status: struct EmployeeStatus : Enum {
+        @start 0;
+        @step  1000;
+
+        ADMIN,   // 0000
+        MANAGER, // 1000
+        ENTRY,   // 2000
+        GUEST,   // 3000
+    },
+    Name: String,
+    ID:   Int,
 }
 
-// Member functions for Employee
+// Define member functions for Employee
 Employee : impl {
-
     // A member variable
+    // Private member variables can only be used within scope
     private mut seed : Int = 0;
 
-    public func new(status: EmployeeStatus, name: Char*) : Employee {
+    public func new(status: EmployeeStatus, name: String) : Employee {
         defer seed++; // Defer seed++ until end of scope
         return Employee {
             Status: status,
             Name: name,
             ID: status + seed,
-        }
+        };
     }
 
     public func print : None {
-        io.print("Employee:\n");
-        io.print("Name: <>\n", self.Name);
-        io.print("Status: <>\n", self.Status);
-        io.print("ID: <>\n", self.ID.human());
+        print("Employee:\n");
+        print("Name: <>\n", self.Name);
+        print("Status: <>\n", self.Status);
+        print("ID: <>\n", self.ID.human());
     }
+}
 
+// Define member functions for Employee::EmployeeStatus
+Employee::EmployeeStatus : impl {
+    // Declare an unsigned function (working name)
+    // With untyped functions, self is assumed.
+    // Traditional functions must explicitly call
+    // self as the fist parameter.
+    public func human : String {
+        switch self {
+            ADMIN   => return "Admin";
+            MANAGER => return "Manager";
+            ENTRY   => return "Entry";
+            GUEST   => return "Guest";
+            else    => return "Unknown";
+        }
+    }
 }
 
 func main() : Int {
