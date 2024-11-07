@@ -24,7 +24,6 @@ public:
 private:
     // Translates error kind to string
     const static inline std::unordered_map<Error::ErrorKind, string> error_translations = {
-        {ErrorKind::ErrorGeneric, "Error"},
         {ErrorKind::ErrorAssert, "Assertion Error"},
         {ErrorKind::ErrorTodo, "Todo"},
         {ErrorKind::ErrorSyntax, "Syntax Error"},
@@ -32,15 +31,16 @@ private:
         {ErrorKind::ErrorArgs, "Argument Error"},
         {ErrorKind::ErrorType, "Type Error"},
         {ErrorKind::ErrorMemory, "Memory Error"},
-        {ErrorKind::ErrorFile, "File Error"}
+        {ErrorKind::ErrorFile, "File Error"},
+        {ErrorKind::ErrorGeneric, "Error"}
     };
 
 public:
     Error(ErrorKind kind, string message);
     Error();
 
-    void print();
-    bool is_okay();
+    void print() const;
+    bool is_okay() const;
 };
 
 
