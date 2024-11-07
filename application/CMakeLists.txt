@@ -8,6 +8,7 @@ set(APPLICATION_HEADERS
 	${APPLICATION_HEADERS_DIR}/error.hpp
 	${APPLICATION_HEADERS_DIR}/lexer.hpp
 	${APPLICATION_HEADERS_DIR}/parser.hpp
+	${APPLICATION_HEADERS_DIR}/common.hpp
 )
 
 # .cpp files

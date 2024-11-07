@@ -1,18 +1,10 @@
-#include <iostream>
 #include <fstream>
-#include <vector>
-
-#define LEXER_IMPL_
-#define PARSER_IMPL_
-#define ERROR_IMPL_
 
 #include "lexer.hpp"
 #include "parser.hpp"
 #include "error.hpp"
 
-typedef std::string string;
 
-bool DEBUG = false;
 
 void usage(char **argv) {
     std::cout << "Usage: " << argv[0] << " <flags> <path_to_file>" << std::endl;
