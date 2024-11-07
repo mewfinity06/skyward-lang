@@ -1,45 +1,8 @@
-#ifndef ERROR_H_
-#define ERROR_H_
+#include "error.hpp"
 
-#include <iostream>
-#include <optional>
-
-typedef std::string string;
-
-class Error {
-public:
-    enum ErrorKind {
-        ErrorOkay,
-        ErrorAssert,
-        ErrorTodo,
-        ErrorSyntax,
-        ErrorNotBound,
-        ErrorArgs,
-        ErrorType,
-        ErrorMemory,
-        ErrorFile,
-        ErrorGeneric,
-    } kind;
-    string message;
-public:
-    Error(ErrorKind kind, string message);
-    Error();
-
-    void print();
-    bool is_okay();
-};
-
-#endif // ERROR_H_
-
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-
-#ifdef ERROR_IMPL_
 
 Error::Error(ErrorKind kind, string message) : kind(kind), message(message) {}
+
 Error::Error() : kind(ErrorOkay), message("Okay") {}
 
 void Error::print() {
@@ -64,4 +27,3 @@ bool Error::is_okay() {
     return false;
 }
 
-#endif

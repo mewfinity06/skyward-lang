@@ -1,0 +1,3 @@
+F:\dev\bin\cmake.exe -E rm -f CMakeFiles\SkywardLangExecutable.dir/objects.a
+C:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\SkywardLangExecutable.dir/objects.a @CMakeFiles\SkywardLangExecutable.dir\objects1.rsp
+C:\msys64\ucrt64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\SkywardLangExecutable.dir/objects.a -Wl,--no-whole-archive -o SkywardLangExecutable.exe -Wl,--out-implib,libSkywardLangExecutable.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\SkywardLangExecutable.dir\linkLibs.rsp

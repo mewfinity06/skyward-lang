@@ -1,5 +1,12 @@
+# IDE excludes
 .vscode
+.vs
+
+# no clue what the hell this is.
 main
+
+# Generated files and folders
+out
 
 # Prerequisites
 *.d
