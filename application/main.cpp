@@ -6,9 +6,9 @@
 #define PARSER_IMPL_
 #define ERROR_IMPL_
 
-#include "src/lexer.hpp"
-#include "src/parser.hpp"
-#include "src/error.hpp"
+#include "lexer.hpp"
+#include "parser.hpp"
+#include "error.hpp"
 
 typedef std::string string;
 
