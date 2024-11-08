@@ -74,15 +74,14 @@ int main(int argc, char **argv) {
 
     path = argv[argc - 1];
 
-    for (int arg_idx = 0; arg_idx < argc; arg_idx++) {
-        for (int flag_idx = 0; flag_idx < flags.size(); flag_idx++) {
-            if (flags[flag_idx].has(argv[arg_idx])) {
-                // std::cout << "Found: " << argv[arg_idx] << std::endl;
-                flags[flag_idx].update((void*)1);
-            }
-        }
-    }
+    // for (int arg_idx = 0; arg_idx < argc; arg_idx++) {
+    //     for (int flag_idx = 0; flag_idx < flags.size(); flag_idx++) {
+    //         if (flags[flag_idx].has(argv[arg_idx])) {
+    //             flags[flag_idx].update((void*)1);
+    //         }
+    //     }
+    // }
 
-    // vector<Token> words = tokenize_with_positions(path);
-    // debug_tokens(words);
+    vector<Token> words = tokenize_with_positions(path);
+    debug_tokens(words);
 }

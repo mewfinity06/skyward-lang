@@ -14,6 +14,24 @@ const std::string single_char_delims = "!@#$%^&*()_+-={}[]|\\:;\"\'<>,.?/`~";
 
 const std::string comment_start = "//";
 
+const std::unordered_set<std::string> non_word_tokens = {
+    // Assignment
+    ":", "=", ":=", "+=", "-=", "*=", "/=", "%=", "|=", "~=",
+    "&=", "&~=", "<<=", ">==", "&&=", "||=",
+    // Seperators
+    "{", "}", "(", ")", "[", "]", ";", ",", 
+    // Iterators
+    "..<", "..=", 
+    // Comparison
+    "==", "!=", "<=", ">=",
+    // Logical operators
+    "&&", "||", "!", "|", "~", "&", "&~", "<<", ">>", 
+    // Arithmetic
+    "+", "-", "*", "%", "++", "--", "**",
+    // Misc
+    "<", ">", "@", "#", "$", "^"
+};
+
 const std::unordered_set<std::string> multi_char_tokens = {
     "<=", ">=", "==", "!=", "&&", "||", "++", "--", "**",
     "->", "=>", "||", "&&", "|>", ":=",
