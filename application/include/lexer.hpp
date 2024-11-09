@@ -39,12 +39,6 @@ const std::unordered_set<std::string> non_word_tokens = {
     "@", "#", "$", "^", ".", "`", "\\", "?"
 };
 
-// TODO: Depricate this, impliment non_word_tokens
-const std::unordered_set<std::string> multi_char_tokens = {
-    "<=", ">=", "==", "!=", "&&", "||", "++", "--", "**",
-    "->", "=>", "||", "&&", "|>", ":=",
-};
-
 const std::unordered_set<std::string> types = {
     "Int", "Float", "Char", "String", "Byte", "Bool",
     "Void", "None", "Enum", "Compact", "Loose", "Union",
