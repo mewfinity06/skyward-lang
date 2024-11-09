@@ -56,7 +56,7 @@ Although Skyward operates close to the hardware, it remains feature-rich and ver
 
 ## Basic Syntax
 
-### [To see more syntax, see this](syntax.sky)
+### [To see more syntax, see this](../tests/syntax.sky)
 
 ```rust
 use io; // Import the IO library
@@ -79,7 +79,7 @@ EmployeeStatus : impl {
     // With untyped functions, self is assumed.
     // Traditional functions must explicitly call
     // self as the fist parameter.
-    public func human : Char* {
+    public func human : String {
         switch(self) {
         ADMIN   => return "Admin";
         MANAGER => return "Manager";
@@ -93,7 +93,7 @@ EmployeeStatus : impl {
 // Declare a Compact Struct
 struct Employee : Compact {
     Status: EmployeeStatus,
-    Name:   Char*,
+    Name:   String,
     ID:     Int,
 }
 
@@ -103,7 +103,7 @@ Employee : impl {
     // A member variable
     private mut seed : Int = 0;
 
-    public func new(status: EmployeeStatus, name: Char*) : Employee {
+    public func new(status: EmployeeStatus, name: String) : Employee {
         defer seed++; // Defer seed++ until end of scope
         return Employee {
             Status: status,
