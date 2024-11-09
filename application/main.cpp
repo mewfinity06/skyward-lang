@@ -9,21 +9,7 @@ inline vector<Flag> flags;
 
 void usage(char **argv) {
 
-    std::cout
-    << "------------------------------" << std::endl
-    << "            ()                " << std::endl
-    << "            )(                " << std::endl
-    << "         o======o             " << std::endl
-    << "            ||                " << std::endl 
-    << "            ||                " << std::endl
-    << "            ||                " << std::endl
-    << "       ,c88888888b            " << std::endl
-    << "      ,88888888888b           " << std::endl
-    << "      88888888888Y\"          " << std::endl
-    << ",,;,,;;\"Y888888Y\",,,,,,,;;,;" << std::endl
-    << "------------------------------" << std::endl
-    << "       S K Y W A R D          " << std::endl;
-    std::cout << std::endl;
+    std::cout << LOGO << std::endl;
     std::cout << "Usage: " << argv[0] << " <flags> <path_to_file>" << std::endl;
     std::cout << "Flags:" << std::endl;
     for (int i = 0; i < flags.size(); i++) {
