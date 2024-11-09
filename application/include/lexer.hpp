@@ -6,6 +6,8 @@
 #include <sstream>
 #include <fstream>
 #include <variant>
+#include <algorithm> 
+#include <locale>
 
 // Forward declarations
 class Token;

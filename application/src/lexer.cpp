@@ -1,6 +1,25 @@
 #include "lexer.hpp"
 #include "magic_enum/magic_enum.hpp"
 
+// trim from start (in place)
+inline void ltrim(std::string &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }));
+}
+
+// trim from end (in place)
+inline void rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
+}
+
+inline void trim(std::string &s) {
+    rtrim(s);
+    ltrim(s);
+}
+
 string token_kind_to_string(TokenKind kind) {
     // static casting because magic_enum::enum_name() returns a string_view
     return static_cast<string>(magic_enum::enum_name(kind)); 
@@ -43,11 +62,12 @@ std::vector<Token> tokenize_with_positions(const std::string file_path) {
 
     Error err = Error();
 
-    std::ifstream t = std::ifstream(file_path);
+    std::ifstream t(file_path);
 
     t.seekg(0, std::ios::end);
     size_t size = t.tellg();
-    char* buffer = (char*)malloc(size);
+    t.seekg(0);
+    char* buffer = (char*)malloc(size + 1);
 
     if (!buffer) {
         err = Error(Error::ErrorKind::ErrorMemory, "Could not allocate memory for buffer");
@@ -55,19 +75,21 @@ std::vector<Token> tokenize_with_positions(const std::string file_path) {
         return tokens;
     }
 
-    t.seekg(0);
-    t.read(&buffer[0], size);
+    t.read(buffer, size);
+    buffer[size] = '\0'; // Null-terminate the buffer
 
-    string source = (string)buffer;
+    std::string source(buffer);
+    free(buffer);
 
-    for (size_t end = 0; end < source.size(); ++end) {
-        // Check for single-line comments
+    while (start < source.size()) {
+        size_t max_token_length = 3; // Maximum length of a multi-character token
+        size_t end = start;
+
+        // Step 1: Handle comments
         if (source.substr(end, 2) == comment_start) {
-            // Add the preceding token if any
             if (start < end) {
                 tokens.push_back(Token(file_path, source.substr(start, end - start), row, col - static_cast<int>(end - start)));
             }
-            // Move end to the end of the line
             while (end < source.size() && source[end] != '\n') {
                 end++;
             }
@@ -77,78 +99,65 @@ std::vector<Token> tokenize_with_positions(const std::string file_path) {
             continue;
         }
 
-        // Check for multi-character tokens (like <=, >=) by looking at two characters at a time
-        if (end < source.size() - 1) {
-            std::string two_char_token = source.substr(end, 2);
-            if (multi_char_tokens.find(two_char_token) != multi_char_tokens.end()) {
-                // Add the preceding word token if any
-                if (start < end) {
-                    tokens.push_back(Token(file_path, source.substr(start, end - start), row, col - static_cast<int>(end - start)));
+        // Step 2: Check for multi-character tokens
+        std::string found_token;
+        for (int len = max_token_length; len > 0; len--) {
+            if (end + len <= source.size()) {
+                std::string potential_token = source.substr(end, len);
+                if (non_word_tokens.find(potential_token) != non_word_tokens.end()) {
+                    found_token = potential_token;
+                    break;
                 }
-                // Add the two-character token
-                tokens.push_back(Token(file_path, two_char_token, row, col));
-                start = end + 2;
-                col += 2;
-                end++;
-                continue;
             }
         }
 
-        // Check for strings and character literals
-        if (source[end] == '"' || source[end] == '\'') {
-            char quote_type = source[end];
-            size_t literal_start = end;
-            end++;
-            col++;
-
-            // Capture the entire string or character literal
-            while (end < source.size() && source[end] != quote_type) {
-                if (source[end] == '\\' && end + 1 < source.size()) {
-                    end += 2;  // Skip over escape sequences
-                    col += 2;
-                }
-                else {
-                    end++;
-                    col++;
-                }
+        // If we found a multi-character token
+        if (!found_token.empty()) {
+            if (start < end) {
+                tokens.push_back(Token(file_path, source.substr(start, end - start), row, col - static_cast<int>(end - start)));
             }
+            tokens.push_back(Token(file_path, found_token, row, col));
+            start = end + found_token.size();
+            col += found_token.size();
+            continue;
+        }
 
-            // Include the closing quote in the token
-            if (end < source.size()) {
+        // Step 3: Handle single-character tokens or delimiters
+        std::string single_char = source.substr(end, 1);
+        if (non_word_tokens.find(single_char) != non_word_tokens.end()) {
+            if (start < end) {
+                tokens.push_back(Token(file_path, source.substr(start, end - start), row, col - static_cast<int>(end - start)));
+            }
+            tokens.push_back(Token(file_path, single_char, row, col));
+            start = end + 1;
+            col++;
+            continue;
+        }
+
+        // Step 4: Handle identifiers (alphanumeric words)
+        if (std::isalnum(source[end]) || source[end] == '_') {
+            while (end < source.size() && (std::isalnum(source[end]) || source[end] == '_')) {
                 end++;
                 col++;
             }
-
-            tokens.push_back(Token(file_path, source.substr(literal_start, end - literal_start), row, col - static_cast<int>(end - literal_start)));
+            tokens.push_back(Token(file_path, source.substr(start, end - start), row, col - static_cast<int>(end - start)));
             start = end;
             continue;
         }
 
-        // Single-character delimiter handling
-        if (single_char_delims.find(source[end]) != std::string::npos) {
-            if (start < end) {
-                tokens.push_back(Token(file_path, source.substr(start, end - start), row, col - static_cast<int>(end - start)));
-            }
-            tokens.push_back(Token(file_path, std::string(1, source[end]), row, col));
-            start = end + 1;
-            col++;
-        }
-        else if (std::isspace(source[end])) {
-            // Handle whitespace and update row and column tracking
+        // Step 5: Handle whitespace
+        if (std::isspace(source[end])) {
             if (source[end] == '\n') {
                 row++;
                 col = 1;
-            }
-            else {
+            } else {
                 col++;
             }
-            if (start < end) {
-                tokens.push_back(Token(file_path, source.substr(start, end - start), row, col - static_cast<int>(end - start)));
-            }
             start = end + 1;
-        }
-        else {
+        } else {
             col++;
+            end++;
+            start = end;
         }
     }
 
@@ -156,11 +165,11 @@ std::vector<Token> tokenize_with_positions(const std::string file_path) {
     if (start < source.size()) {
         tokens.push_back(Token(file_path, source.substr(start), row, col - static_cast<int>(source.size() - start)));
     }
-
+    
     tokens.push_back(Token(file_path, "END OF FILE", -1, -1));
-
     return tokens;
 }
+
 
 bool can_convert_to_int(const string& str) {
     std::stringstream ss(str);
@@ -194,7 +203,8 @@ inline Token::Token(string file_path, string word, int row, int col) :
 Token::Token() : kind(TokenKind::TOKEN_UNKNOWN), word(""), col(-1), row(-1) {}
 
 void Token::print() {
-    std::cout << file_path << ":" << row << ":" << col << " |  '" << word << "' \t | " << token_kind_to_string(kind) << std::endl;
+    // std::cout << file_path << ":" << row << ":" << col << " |  '" << word << "' \t | " << token_kind_to_string(kind) << std::endl;
+    std::cout << word << ",";
 }
 
 void Token::check_type() {
