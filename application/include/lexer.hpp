@@ -255,7 +255,7 @@ public:
     int row, col;
 
 public:
-    Token(string word, string file_path, int row, int col);
+    Token(string file_path, string word, int row, int col);
     Token();
 
     void print();

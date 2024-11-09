@@ -58,7 +58,7 @@ std::vector<Token> tokenize_with_positions(const std::string file_path) {
     t.seekg(0);
     t.read(&buffer[0], size);
 
-    string source = buffer;
+    string source = (string)buffer;
 
     for (size_t end = 0; end < source.size(); ++end) {
         // Check for single-line comments
@@ -184,7 +184,7 @@ bool is_type(const string& str) {
     return types.find(str) != types.end();
 }
 
-inline Token::Token(string word, string file_path, int row, int col) :
+inline Token::Token(string file_path, string word, int row, int col) :
     kind(TokenKind::TOKEN_UNKNOWN), word(word),
     row(row), col(col), file_path(file_path)
 {
