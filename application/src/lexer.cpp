@@ -204,7 +204,7 @@ Token::Token() : kind(TokenKind::TOKEN_UNKNOWN), word(""), col(-1), row(-1) {}
 
 void Token::print() {
     // std::cout << file_path << ":" << row << ":" << col << " |  '" << word << "' \t | " << token_kind_to_string(kind) << std::endl;
-    std::cout << word << ",";
+    std::cout << word << ", ";
 }
 
 void Token::check_type() {

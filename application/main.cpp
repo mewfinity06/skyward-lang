@@ -59,11 +59,12 @@ int main(int argc, char **argv) {
 
     string path;
 
-    flags.push_back(Flag({"-d", "-debug"}, "DEBUG | Developer use only", (void*)false));
-    flags.push_back(Flag({"-c", "-compile", "-build"}, "Compiles the project | (Not impliemented yet)", (void*)false));
-    flags.push_back(Flag({"-s", "-silent"}, "Silences the compiler | (Not implemented yet)", (void*)false));
+    flags.push_back(Flag("Debug", {"-d", "-debug"}, "Debug | Developer use only", false));
+    flags.push_back(Flag("Print Tokens", {"-p"}, "Print Tokens | Developer use only | To be depricated", false));
+    flags.push_back(Flag("Compile", {"-c", "-compile", "-b", "-build"}, "Compiles the project | (Not impliemented yet)", false));
+    flags.push_back(Flag("Silent", {"-s", "-silent"}, "Silences the compiler | (Not implemented yet)", false));
 
-    if (argc < 2) {
+    if (argc < 3) {
         usage(argv);
         exit(1);
     }
@@ -73,11 +74,27 @@ int main(int argc, char **argv) {
     for (int arg_idx = 0; arg_idx < argc; arg_idx++) {
         for (int flag_idx = 0; flag_idx < flags.size(); flag_idx++) {
             if (flags[flag_idx].has(argv[arg_idx])) {
-                flags[flag_idx].update((void*)1);
+                flags[flag_idx].update();
             }
         }
     }
 
-    vector<Token> words = tokenize_with_positions(path);
-    print_tokens(words);
+    vector<Token> tokens = tokenize_with_positions(path);
+
+    for (int i = 0; i < flags.size(); i++) {
+        if (flags[i].attr == true) {
+            if (flags[i].name == "Debug") {
+                debug_tokens(tokens);
+            }
+            else if (flags[i].name == "Print Tokens") {
+                print_tokens(tokens);
+            }
+            else if (flags[i].name == "Compile") {
+                std::cout << "Compile not implimented yet" << std::endl;
+            } 
+            else if (flags[i].name == "Silent") {
+                std::cout << "Silent not implimented yet" << std::endl;
+            }
+        } 
+    }
 }

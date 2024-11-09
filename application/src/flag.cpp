@@ -1,6 +1,8 @@
 #include "flag.hpp"
 
-Flag::Flag(const vector<string>& flags, const string desc, void* attr) : flags(flags), desc(desc), attr(attr) {}
+Flag::Flag(const string name, const vector<string>& flags, 
+           const string desc, bool attr) 
+: name(name), flags(flags), desc(desc), attr(attr) {}
 
 bool Flag::has(string word) {
     for (int i = 0; i < flags.size(); i++) {
@@ -20,6 +22,6 @@ void Flag::print() {
     std::cout << "| " << desc << std::endl;
 }
 
-void Flag::update(void* new_attr) {
-    attr = new_attr;
+void Flag::update() {
+    attr = !attr;
 }

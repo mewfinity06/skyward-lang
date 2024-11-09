@@ -4,17 +4,18 @@
 
 class Flag {
 public:
+    string name;
     vector<string> flags;
     string desc;
-    void* attr;
+    bool attr;
 
 public:
-    Flag(const vector<string>& flags, const string desc, void* attr);
+    Flag(const string name, const vector<string>& flags, const string desc, bool attr);
     
     bool has(string word);
     int size();
 
     void print();
 
-    void update(void* new_attr);
+    void update();
 };
