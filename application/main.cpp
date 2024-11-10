@@ -46,8 +46,8 @@ void debug_flags() {
 }
 
 string get_file_contents(string file_path) {
-    ifstream t(file_path);
-    t.seekg(0, ios::end);
+    std::ifstream t(file_path);
+    t.seekg(0, std::ios::end);
     size_t size = t.tellg();
     char* buffer = (char*) malloc(size);
     t.seekg(0);
