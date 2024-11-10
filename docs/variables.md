@@ -131,7 +131,8 @@ An `Enum` declares a struct as an Enumeration
 
 #### Loose -> Struct type
 
-`Loose` declares the struct's memory layout. All data stored within this struct is converted to a pointer of that type. A common mistake is to already cast an member to a pointer. This would make that member a pointer to a pointer
+`Loose` declares the struct's memory layout. All data stored within this struct is converted to a pointer of that type. 
+A common mistake is to already cast an member to a pointer. This would make that member a pointer to a pointer
 
 #### Union -> Struct type
 
