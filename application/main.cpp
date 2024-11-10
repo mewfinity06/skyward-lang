@@ -82,17 +82,18 @@ int main(int argc, char **argv) {
     vector<Token> tokens = tokenize_with_positions(path);
 
     for (int i = 0; i < flags.size(); i++) {
-        if (flags[i].attr == true) {
-            if (flags[i].name == "Debug") {
+        Flag flag = flags[i];
+        if (flag.attr == true) {
+            if (flag.name == "Debug") {
                 debug_tokens(tokens);
             }
-            else if (flags[i].name == "Print Tokens") {
+            else if (flag.name == "Print Tokens") {
                 print_tokens(tokens);
             }
-            else if (flags[i].name == "Compile") {
+            else if (flag.name == "Compile") {
                 std::cout << "Compile not implimented yet" << std::endl;
             } 
-            else if (flags[i].name == "Silent") {
+            else if (flag.name == "Silent") {
                 std::cout << "Silent not implimented yet" << std::endl;
             }
         } 
