@@ -9,34 +9,34 @@ inline vector<Flag> flags;
 
 void usage(char **argv) {
 
-    std::cout << LOGO << std::endl;
-    std::cout << "Usage: " << argv[0] << " <flags> <path_to_file>" << std::endl;
-    std::cout << "Flags:" << std::endl;
+    cout << LOGO << endl;
+    cout << "Usage: " << argv[0] << " <flags> <path_to_file>" << endl;
+    cout << "Flags:" << endl;
     for (int i = 0; i < flags.size(); i++) {
-        std::cout << "    ";
+        cout << "    ";
         flags[i].print();
     }
-    std::cout << std::endl;
+    cout << endl;
 }
 
-void debug_tokens(std::vector<Token> tokens) {
+void debug_tokens(vector<Token> tokens) {
     int total = 0;
     for (int i = 0; i < tokens.size(); ++i) {
         tokens[i].debug();
-        std::cout << std::endl;
+        cout << endl;
         total++;
     }
-    std::cout << "Total tokens: " << total << std::endl;
+    cout << "Total tokens: " << total << endl;
 }
 
-void print_tokens(std::vector<Token> tokens) {
+void print_tokens(vector<Token> tokens) {
     int total = 0;
     for (int i = 0; i < tokens.size(); ++i) {
         tokens[i].print();
         total++;
     }
-    std::cout << std::endl;
-    std::cout << "Total tokens: " << total << std::endl;
+    cout << endl;
+    cout << "Total tokens: " << total << endl;
 }
 
 void debug_flags() {
@@ -46,8 +46,8 @@ void debug_flags() {
 }
 
 string get_file_contents(string file_path) {
-    std::ifstream t(file_path);
-    t.seekg(0, std::ios::end);
+    ifstream t(file_path);
+    t.seekg(0, ios::end);
     size_t size = t.tellg();
     char* buffer = (char*) malloc(size);
     t.seekg(0);
@@ -91,10 +91,10 @@ int main(int argc, char **argv) {
                 print_tokens(tokens);
             }
             else if (flag.name == "Compile") {
-                std::cout << "Compile not implimented yet" << std::endl;
+                cout << "Compile not implimented yet" << endl;
             } 
             else if (flag.name == "Silent") {
-                std::cout << "Silent not implimented yet" << std::endl;
+                cout << "Silent not implimented yet" << endl;
             }
         } 
     }
