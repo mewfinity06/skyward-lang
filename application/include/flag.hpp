@@ -2,6 +2,9 @@
 #include "common.hpp"
 #include "error.hpp"
 
+// TODO: make `attr` to hold any value 
+//     | may have to seperate into different classes
+//     | i.e. having a class for bool attrs, int attrs, etc
 class Flag {
 public:
     string name;
