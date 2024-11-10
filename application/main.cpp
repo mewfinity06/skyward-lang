@@ -7,6 +7,10 @@
 
 inline vector<Flag> flags;
 
+const bool DEBUG = true;
+
+#define NOT_IMPL(msg) cout << (msg) << " not implimented yet" << endl
+
 void usage(char **argv) {
 
     cout << LOGO << endl;
@@ -59,10 +63,18 @@ int main(int argc, char **argv) {
 
     string path;
 
-    flags.push_back(Flag("Debug", {"-d", "-debug"}, "Debug | Developer use only", false));
-    flags.push_back(Flag("Print Tokens", {"-p"}, "Print Tokens | Developer use only | To be depricated", false));
-    flags.push_back(Flag("Compile", {"-c", "-compile", "-b", "-build"}, "Compiles the project | (Not impliemented yet)", false));
-    flags.push_back(Flag("Silent", {"-s", "-silent"}, "Silences the compiler | (Not implemented yet)", false));
+    // Name, Flags, Description, default value (Boolean)
+
+    // Flags for debugging
+    flags.push_back(Flag("Debug", {"-d", "--debug"}, "Debug | Developer use only", false));
+    flags.push_back(Flag("Print Tokens", {"-p", "--print"}, "Print Tokens | Developer use only | To be depricated", false));
+    // Flags for Building and Running
+    flags.push_back(Flag("Build", {"-b", "--build"}, "Build the project | (Not impliemented yet)", false));
+    flags.push_back(Flag("Run", {"-r", "--run"}, "Run the program | (Not implimented yet)", false));
+    flags.push_back(Flag("Build Run", {"-rb", "--runbuild"}, "Build & run the program | (Not implimented yet)", false));
+    // Other Flags
+    flags.push_back(Flag("Silent", {"-s", "--silent"}, "Silences the compiler | (Not implimented yet)", false));
+    flags.push_back(Flag("Verbose", {"-v", "--verbose"}, "Prints all debug information available to user | (Not implimented yet)", false));
 
     if (argc < 3) {
         usage(argv);
@@ -84,17 +96,14 @@ int main(int argc, char **argv) {
     for (int i = 0; i < flags.size(); i++) {
         Flag flag = flags[i];
         if (flag.attr == true) {
-            if (flag.name == "Debug") {
+            if (flag.name == "Debug" && DEBUG == true) {
                 debug_tokens(tokens);
             }
             else if (flag.name == "Print Tokens") {
                 print_tokens(tokens);
             }
-            else if (flag.name == "Compile") {
-                cout << "Compile not implimented yet" << endl;
-            } 
-            else if (flag.name == "Silent") {
-                cout << "Silent not implimented yet" << endl;
+            else {
+                NOT_IMPL(flag.name);
             }
         } 
     }
