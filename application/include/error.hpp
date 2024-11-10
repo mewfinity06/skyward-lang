@@ -17,6 +17,7 @@ public:
         ErrorMemory,
         ErrorFile,
         ErrorGeneric,
+        ErrorLexical,
     } kind;
 
     string message;
@@ -32,7 +33,8 @@ private:
         {ErrorKind::ErrorType, "Type Error"},
         {ErrorKind::ErrorMemory, "Memory Error"},
         {ErrorKind::ErrorFile, "File Error"},
-        {ErrorKind::ErrorGeneric, "Error"}
+        {ErrorKind::ErrorGeneric, "Error"},
+        {ErrorKind::ErrorLexical, "Lexical"},
     };
 
 public:
