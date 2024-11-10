@@ -145,7 +145,40 @@ std::vector<Token> tokenize_with_positions(const std::string file_path) {
             continue;
         }
 
-        // Step 5: Handle whitespace
+        // Step 5: Handle string literals (enclosed by " or ')
+        if (source[end] == '"' || source[end] == '\'') {
+            char quote_type = source[end];
+            size_t literal_start = end;
+            end++; // Move past the opening quote
+            col++;
+
+            bool is_escaped = false;
+            while (end < source.size() && (source[end] != quote_type || is_escaped)) {
+                if (source[end] == '\\' && !is_escaped) {
+                    is_escaped = true; // Escape the next character
+                } else {
+                    is_escaped = false;
+                }
+                end++;
+                col++;
+            }
+
+            // Include the closing quote if found
+            if (end < source.size() && source[end] == quote_type) {
+                end++;
+                col++;
+            } else {
+                // Handle error: Unclosed string
+                err = Error(Error::ErrorKind::ErrorLexical, "Unterminated string literal");
+                err.print();
+            }
+
+            tokens.push_back(Token(file_path, source.substr(literal_start, end - literal_start), row, col - static_cast<int>(end - literal_start)));
+            start = end;
+            continue;
+        }
+
+        // Step 6: Handle whitespace
         if (std::isspace(source[end])) {
             if (source[end] == '\n') {
                 row++;
@@ -204,7 +237,7 @@ Token::Token() : kind(TokenKind::TOKEN_UNKNOWN), word(""), col(-1), row(-1) {}
 
 void Token::print() {
     // std::cout << file_path << ":" << row << ":" << col << " |  '" << word << "' \t | " << token_kind_to_string(kind) << std::endl;
-    std::cout << word << ", ";
+    std::cout << word << " ";
 }
 
 void Token::check_type() {
