@@ -1,5 +1,0 @@
-/home/mewfinity/Dev/Skyward/build/CMakeFiles/edit_cache.dir
-/home/mewfinity/Dev/Skyward/build/CMakeFiles/rebuild_cache.dir
-/home/mewfinity/Dev/Skyward/build/application/CMakeFiles/SkywardLangExecutable.dir
-/home/mewfinity/Dev/Skyward/build/application/CMakeFiles/edit_cache.dir
-/home/mewfinity/Dev/Skyward/build/application/CMakeFiles/rebuild_cache.dir

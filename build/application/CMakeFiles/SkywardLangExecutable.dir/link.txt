@@ -1,1 +1,0 @@
-/usr/bin/g++ -g CMakeFiles/SkywardLangExecutable.dir/main.cpp.o CMakeFiles/SkywardLangExecutable.dir/src/error.cpp.o CMakeFiles/SkywardLangExecutable.dir/src/lexer.cpp.o CMakeFiles/SkywardLangExecutable.dir/src/parser.cpp.o CMakeFiles/SkywardLangExecutable.dir/src/flag.cpp.o -o SkywardLangExecutable
